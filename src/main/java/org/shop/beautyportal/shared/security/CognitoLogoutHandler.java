@@ -21,7 +21,10 @@ public class CognitoLogoutHandler extends SimpleUrlLogoutSuccessHandler {
     private String userPoolClientId;
 
     @Override
-    protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+    protected String determineTargetUrl(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Authentication authentication) {
         return UriComponentsBuilder
                 .fromUri(URI.create(domain + "/logout"))
                 .queryParam("client_id", userPoolClientId)

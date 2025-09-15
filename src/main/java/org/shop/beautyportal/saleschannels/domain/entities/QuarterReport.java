@@ -1,5 +1,6 @@
 package org.shop.beautyportal.saleschannels.domain.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -11,53 +12,115 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@Schema(
+        name = "QuarterReport",
+        description = "Quarterly report header for a distributor"
+)
 @Entity
-@Table
+@Table(name = "quarter_report")
 @Builder
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuarterReport {
 
+    @Schema(
+            description = "Report identifier (UUID)",
+            example = "550e8400-e29b-41d4-a716-446655440000",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.UUID)
-    private UUID Id;
+    private UUID id;
 
+    @Schema(
+            description = "Associated distributor (owner of the report)",
+            accessMode = Schema.AccessMode.WRITE_ONLY
+    )
     @ManyToOne
-    @Column(name = "distributor_id")
+    @JoinColumn(name = "distributor_id")
     private Distributor distributor;
 
+    @Schema(
+            description = "Calendar year of the report",
+            example = "2025",
+            minimum = "2000"
+    )
     @Column(nullable = false)
     private Integer year;
 
+    @Schema(
+            description = "Quarter number in range 1..4",
+            example = "2",
+            minimum = "1",
+            maximum = "4"
+    )
     @Column(nullable = false)
     private Integer quarter;
 
+    @Schema(
+            description = "Input currency (ISO 4217)",
+            example = "PLN",
+            maxLength = 3
+    )
     @Column(name = "input_currency", length = 3)
     private String inputCurrency;
 
+    @Schema(
+            description = "Number of newly acquired clients in this quarter",
+            example = "7"
+    )
     @Column(name = "new_clients")
     private Integer newClients;
 
+    @Schema(
+            description = "Sum of all channel amounts in input currency (materialized)",
+            example = "45678.90",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
     @Column(name = "total_input_ccy", precision = 18, scale = 2)
     private BigDecimal totalInputCcy;
 
+    @Schema(
+            description = "Sum of all channel amounts converted to EUR (materialized)",
+            example = "10567.34",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
     @Column(name = "total_eur", precision = 18, scale = 2)
     private BigDecimal totalEur;
 
+    @Schema(
+            description = "Creation timestamp",
+            example = "2025-09-15T14:30:00Z",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
+    @Builder.Default
     @Column(name = "created_at")
     private OffsetDateTime createdAt = OffsetDateTime.now();
 
+    @Schema(
+            description = "Last update timestamp",
+            example = "2025-09-15T15:45:00Z",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
+    @Builder.Default
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt = OffsetDateTime.now();
 
+    @Schema(
+            description = "Optimistic lock version",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
     @Version
     private Integer version;
 
+    @Schema(
+            description = "Quarter lines broken down by month and channel",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
     @OneToMany(mappedBy = "report", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private Set<QuarterChannelAmount> lines = new HashSet<>();
-
 }
+
