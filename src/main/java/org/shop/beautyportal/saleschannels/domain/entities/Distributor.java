@@ -36,7 +36,7 @@ public class Distributor {
             example = "DIST-PL-001",
             maxLength = 64
     )
-    @Column(length = 64, nullable = false, unique = true)
+    @Column(length = 64, unique = true)
     private String code;
 
     @Schema(
@@ -44,6 +44,6 @@ public class Distributor {
             example = "Acme Distribution Sp. z o.o.",
             maxLength = 255
     )
-    @Column(length = 255, nullable = false)
+    @Column(name="name", length = 255)
     private String name;
 }
