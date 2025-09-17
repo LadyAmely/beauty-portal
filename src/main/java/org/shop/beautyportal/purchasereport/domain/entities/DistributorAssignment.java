@@ -30,7 +30,7 @@ public class DistributorAssignment {
     @ManyToOne
     @JoinColumn(name = "distributor")
     @Schema(description = "Reference to the distributor assigned to the export manager")
-    private Distributor distributor;
+    private DistributorPurchase distributor;
 
     @ManyToOne
     @JoinColumn(name = "export_manager")

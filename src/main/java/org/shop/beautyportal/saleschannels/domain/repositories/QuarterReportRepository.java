@@ -8,3 +8,5 @@ import java.util.UUID;
 public interface QuarterReportRepository extends JpaRepository<QuarterReport, UUID> {
     boolean existsByDistributorIdAndYearAndQuarter(UUID distributorId, Integer year, Integer quarter);
 }
+
+

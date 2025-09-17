@@ -30,7 +30,7 @@ public class SalesTransaction {
     @ManyToOne
     @JoinColumn(name="distributor")
     @Schema(description = "Distributor associated with the transaction")
-    private Distributor distributor;
+    private DistributorPurchase distributor;
 
     @ManyToOne
     @JoinColumn(name="pos_location")

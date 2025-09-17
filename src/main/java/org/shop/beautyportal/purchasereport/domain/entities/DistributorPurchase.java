@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Entity representing a distributor in the purchase reporting system")
-public class Distributor {
+public class DistributorPurchase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

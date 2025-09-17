@@ -30,7 +30,7 @@ public class PosLocation {
     @ManyToOne
     @JoinColumn(name = "distributor")
     @Schema(description = "Reference to the distributor that owns the POS location")
-    private Distributor distributor;
+    private DistributorPurchase distributor;
 
     @Column(name = "name")
     @Schema(description = "Name of the POS location", example = "Warsaw Beauty Store")

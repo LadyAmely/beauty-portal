@@ -27,7 +27,7 @@ public class PurchaseReport {
     @ManyToOne
     @JoinColumn(name = "distributor_id")
     @Schema(description = "Distributor associated with the purchase report")
-    private Distributor distributor;
+    private DistributorPurchase distributor;
 
     @Column(name = "year")
     @Schema(description = "Year of the purchase report", example = "2025")

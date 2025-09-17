@@ -29,7 +29,7 @@ public class PosOpeningsTarget {
     @ManyToOne
     @JoinColumn(name = "distributor")
     @Schema(description = "Distributor associated with the POS openings target")
-    private Distributor distributor;
+    private DistributorPurchase distributor;
 
     @Column(name="year")
     @Schema(description = "Year for which the target is defined", example = "2025")
