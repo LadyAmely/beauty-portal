@@ -57,4 +57,9 @@ public class Client {
             accessMode = Schema.AccessMode.READ_ONLY)
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @Schema(description = "Sales channel of the client", example = "PHARMACY")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "channel", nullable = false, length = 32)
+    private SalesChannel channel;
 }

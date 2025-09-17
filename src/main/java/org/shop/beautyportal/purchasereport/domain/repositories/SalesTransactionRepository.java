@@ -7,3 +7,4 @@ import java.util.UUID;
 
 public interface SalesTransactionRepository extends JpaRepository<SalesTransaction, UUID> {
 }
+
