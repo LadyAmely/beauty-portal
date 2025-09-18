@@ -14,9 +14,12 @@ import java.util.UUID;
 
 public interface MediaFileRepository extends JpaRepository<MediaFile, UUID>, JpaSpecificationExecutor<MediaFile> {
     Optional<MediaFile> findByStoragePath(String storagePath);
-
     List<MediaFile> findAllByIdIn(Collection<UUID> ids);
-
+    List<MediaFile> findAllByFolderKindAndSubfolderKeyOrderByCreatedAtDesc(
+            MediaFolderKind folderKind, String subfolderKey);
     Page<MediaFile> findAllByFolderKindAndSubfolderKey(
             MediaFolderKind folderKind, String subfolderKey, Pageable pageable);
+
+    List<MediaFile> findProductsBySku(String sku);
+    List<MediaFile> findMarketingBySkuToken(String sku);
 }
