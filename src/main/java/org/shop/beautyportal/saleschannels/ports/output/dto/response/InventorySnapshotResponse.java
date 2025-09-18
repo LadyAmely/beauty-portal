@@ -9,9 +9,9 @@ import java.util.UUID;
 @Builder
 @Schema(name = "InventorySnapshotResponse")
 public class InventorySnapshotResponse {
-    UUID id;
-    UUID distributorId;
-    LocalDateTime snapshotDate;
-    int reportedLines;
+    private UUID id;
+    private UUID distributorId;
+    private LocalDateTime snapshotDate;
+    private int reportedLines;
 }
 

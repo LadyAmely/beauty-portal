@@ -8,9 +8,9 @@ import java.util.UUID;
 @Builder
 @Schema(name = "MonthlySkuSalesResponse")
 public class MonthlySkuSalesResponse {
-    UUID distributorId;
-    Integer year;
-    Integer month;
-    int reportedLines;
+    private UUID distributorId;
+    private Integer year;
+    private Integer month;
+    private int reportedLines;
 }
 
