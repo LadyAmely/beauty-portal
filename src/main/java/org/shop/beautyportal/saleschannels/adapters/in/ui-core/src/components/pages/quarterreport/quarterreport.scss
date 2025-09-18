@@ -1,0 +1,27 @@
+@import "../../../styles/_variables";
+
+.quarter{
+  display:grid;gap:1rem;
+
+  &__controls{
+    display:grid;grid-template-columns:1fr 1fr;gap:.75rem;
+    .label{display:block;margin-bottom:.35rem;color:$neutral-600;font-size:.85rem;}
+  }
+
+  &__toolbar{
+    display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;
+  }
+
+  &__table{
+    .table{font-size:.95rem;}
+    .table td,.table th{white-space:nowrap;}
+    .table .cell--num{font-variant-numeric:tabular-nums;text-align:right;}
+  }
+
+  &__note{font-size:.85rem;color:$neutral-500;}
+
+  &--compact{
+    .quarter__controls{gap:.5rem;}
+    .table th,.table td{padding:.45rem .5rem;}
+  }
+}

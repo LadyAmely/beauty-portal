@@ -1,0 +1,83 @@
+
+@import "../../../styles/_variables.scss";
+
+.input {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+
+  width: 100%;
+  padding: .55rem .7rem;
+  border: 1px solid $neutral-200;
+  border-radius: .5rem;
+
+  background: #fff;
+  color: $color-text;
+  line-height: 1.2;
+
+  transition:
+          border-color .15s ease,
+          box-shadow .15s ease,
+          background-color .15s ease;
+
+  &::placeholder { color: $neutral-500; }
+
+  &:hover { border-color: $neutral-300; }
+
+  &:focus {
+    outline: none;
+    border-color: $primary-600;
+    box-shadow: 0 0 0 3px rgba($primary-400, .25);
+  }
+
+  &:disabled,
+  &.is-disabled {
+    background: $neutral-100;
+    color: $neutral-600;
+    cursor: not-allowed;
+  }
+  &:read-only,
+  &.is-readonly {
+    background: $neutral-50;
+  }
+
+  &.is-invalid,
+  &[aria-invalid="true"] {
+    border-color: $danger-400;
+    box-shadow: 0 0 0 3px rgba($danger-300, .35);
+    &:focus { border-color: $danger-600; box-shadow: 0 0 0 3px rgba($danger-500, .35); }
+  }
+  &.is-valid {
+    border-color: $success-400;
+    box-shadow: 0 0 0 3px rgba($success-300, .25);
+  }
+
+  &--sm { padding: .4rem .6rem; border-radius: .45rem; font-size: .9rem; }
+  &--lg { padding: .7rem 1rem; border-radius: .6rem; font-size: 1.05rem; }
+
+  &--num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  &--primary {
+    background: #fff;
+    border-color: $primary-300;
+
+    &:hover { border-color: $primary-400; }
+    &:focus,
+    &:focus-visible {
+      border-color: $primary-600;
+      box-shadow: 0 0 0 3px rgba($primary-400, .35);
+    }
+  }
+
+  &--secondary {
+    background: #fff;
+    border-color: $secondary-300;
+
+    &:hover { border-color: $secondary-400; }
+    &:focus,
+    &:focus-visible {
+      border-color: $secondary-600;
+      box-shadow: 0 0 0 3px rgba($secondary-300, .35);
+    }
+  }
+}

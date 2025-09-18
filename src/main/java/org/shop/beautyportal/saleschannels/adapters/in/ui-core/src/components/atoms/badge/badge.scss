@@ -1,0 +1,14 @@
+@import "../../../styles/_variables.scss";
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:.2rem .5rem;
+  border-radius:.5rem;
+  font-size:.75rem;
+  font-weight:600;
+  &--primary{
+    background:$primary-100;
+    color:$primary-700
+  }
+}
