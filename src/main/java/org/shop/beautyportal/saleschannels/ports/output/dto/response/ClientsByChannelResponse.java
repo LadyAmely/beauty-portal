@@ -11,14 +11,14 @@ import java.util.UUID;
 @Builder
 @Schema(name = "ClientsByChannelResponse")
 public class ClientsByChannelResponse {
-    UUID distributorId;
-    Map<SalesChannel, List<ClientDTO>> clientsByChannel;
+    private UUID distributorId;
+    private Map<SalesChannel, List<ClientDTO>> clientsByChannel;
 
     @Builder
     public static class ClientDTO {
-        UUID id;
-        String name;
-        String taxId;
+        private UUID id;
+        private String name;
+        private String taxId;
     }
 }
 

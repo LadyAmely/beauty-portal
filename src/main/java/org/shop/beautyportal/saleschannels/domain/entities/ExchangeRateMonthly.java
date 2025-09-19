@@ -36,7 +36,7 @@ public class ExchangeRateMonthly {
             description = "Calendar year of the rate",
             example = "2025"
     )
-    @Column(name = "year", nullable = false)
+    @Column(name = "year_no", nullable = false)
     private Integer year;
 
     @Schema(
@@ -45,7 +45,7 @@ public class ExchangeRateMonthly {
             minimum = "1",
             maximum = "12"
     )
-    @Column(name = "month", nullable = false)
+    @Column(name = "month_no", nullable = false)
     private Integer month;
 
     @Schema(

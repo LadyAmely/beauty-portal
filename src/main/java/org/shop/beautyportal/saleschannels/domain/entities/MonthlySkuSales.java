@@ -12,20 +12,16 @@ import java.util.UUID;
 
 @Schema(
         name = "MonthlySkuSales",
-        description = "Monthly sales report per distributor, SKU, and sales channel"
+        description = "Monthly sales per distributor, SKU and sales channel"
 )
 @Entity
 @Table(
         name = "monthly_sku_sales",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "uq_monthly_sku",
-                        columnNames = {"distributor_id", "year", "month", "sku_code", "channel"}
-                )
-        },
-        indexes = {
-                @Index(name = "idx_mss_ym", columnList = "distributor_id, year, month")
-        }
+        uniqueConstraints = @UniqueConstraint(
+                name = "uq_monthly_sku",
+                columnNames = {"distributor_id", "year_no", "month_no", "sku_code", "channel"}
+        ),
+        indexes = @Index(name = "idx_mss_ym", columnList = "distributor_id, year_no, month_no")
 )
 @Builder
 @Getter
@@ -35,7 +31,7 @@ import java.util.UUID;
 public class MonthlySkuSales {
 
     @Schema(
-            description = "Unique identifier of the sales record (UUID)",
+            description = "Unique identifier (UUID)",
             example = "550e8400-e29b-41d4-a716-446655440000",
             accessMode = Schema.AccessMode.READ_ONLY
     )
@@ -53,19 +49,21 @@ public class MonthlySkuSales {
     private Distributor distributor;
 
     @Schema(
-            description = "Year of the sales record",
-            example = "2025"
+            description = "Calendar year of the sales record",
+            example = "2025",
+            minimum = "2000",
+            maximum = "2100"
     )
-    @Column(name = "year", nullable = false)
+    @Column(name = "year_no", nullable = false)
     private Integer year;
 
     @Schema(
-            description = "Month of the sales record (1-12)",
+            description = "Calendar month of the sales record (1–12)",
             example = "9",
             minimum = "1",
             maximum = "12"
     )
-    @Column(name = "month", nullable = false)
+    @Column(name = "month_no", nullable = false)
     private Integer month;
 
     @Schema(
@@ -77,23 +75,27 @@ public class MonthlySkuSales {
     private String skuCode;
 
     @Schema(
-            description = "Sales channel of the transaction",
-            example = "ECOMMERCE_B2C"
+            description = "Sales channel (enum)",
+            example = "PHARMACY"
     )
     @Enumerated(EnumType.STRING)
-    @Column(length = 32, nullable = false)
+    @Column(name = "channel", length = 32, nullable = false)
     private SalesChannel channel;
 
     @Schema(
             description = "Quantity sold",
-            example = "42.000"
+            example = "42.000",
+            minimum = "0.000",
+            format = "decimal"
     )
-    @Column(precision = 18, scale = 3, nullable = false)
+    @Column(name = "quantity", precision = 18, scale = 3, nullable = false)
     private BigDecimal quantity;
 
     @Schema(
             description = "Net sales value in input currency",
-            example = "12345.67"
+            example = "1234.56",
+            minimum = "0.00",
+            format = "decimal"
     )
     @Column(name = "net_value_input_ccy", precision = 18, scale = 2, nullable = false)
     private BigDecimal netValueInputCcy;
@@ -109,21 +111,14 @@ public class MonthlySkuSales {
     @Schema(
             description = "Net sales value converted to EUR (calculated)",
             example = "2837.45",
-            accessMode = Schema.AccessMode.READ_ONLY
+            accessMode = Schema.AccessMode.READ_ONLY,
+            format = "decimal"
     )
     @Column(name = "net_value_eur", precision = 18, scale = 2)
     private BigDecimal netValueEur;
 
     @Schema(
-            description = "Optional import batch identifier",
-            example = "IMPORT-2025-09-BATCH-42",
-            maxLength = 128
-    )
-    @Column(name = "source_import_id", length = 128)
-    private String sourceImportId;
-
-    @Schema(
-            description = "Creation timestamp of the record",
+            description = "Creation timestamp",
             example = "2025-09-15T14:30:00Z",
             accessMode = Schema.AccessMode.READ_ONLY
     )

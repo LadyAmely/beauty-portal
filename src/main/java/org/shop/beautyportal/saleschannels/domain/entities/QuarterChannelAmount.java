@@ -11,27 +11,21 @@ import java.util.UUID;
 
 @Schema(
         name = "QuarterChannelAmount",
-        description = "Sales amount for a specific month and channel"
+        description = "Sales amount for a specific month and sales channel within a quarterly report"
 )
 @Entity
 @Table(
         name = "quarter_channel_amount",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "uq_report_month_channel",
-                        columnNames = {"report_id", "year", "month", "channel"}
-                )
-        },
+        uniqueConstraints = @UniqueConstraint(
+                name = "uq_report_month_channel",
+                columnNames = {"report_id", "year_no", "month_no", "channel"}
+        ),
         indexes = {
                 @Index(name = "idx_qca_report", columnList = "report_id"),
-                @Index(name = "idx_qca_ym", columnList = "year, month")
+                @Index(name = "idx_qca_ym",     columnList = "year_no, month_no")
         }
 )
-@Builder
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class QuarterChannelAmount {
 
     @Schema(
@@ -45,7 +39,7 @@ public class QuarterChannelAmount {
     private UUID id;
 
     @Schema(
-            description = "Quarterly report to which this line belongs",
+            description = "Owning quarterly report header",
             accessMode = Schema.AccessMode.WRITE_ONLY
     )
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -53,42 +47,46 @@ public class QuarterChannelAmount {
     private QuarterReport report;
 
     @Schema(
-            description = "Year of this sales amount",
-            example = "2025"
+            description = "Calendar year",
+            example = "2025",
+            minimum = "2000",
+            maximum = "2100"
     )
-    @Column(name = "year", nullable = false)
+    @Column(name = "year_no",  nullable = false)
     private Integer year;
 
     @Schema(
-            description = "Month number (1-12)",
+            description = "Month number (1–12)",
             example = "9",
             minimum = "1",
             maximum = "12"
     )
-    @Column(name = "month", nullable = false)
+    @Column(name = "month_no", nullable = false)
     private Integer month;
 
     @Schema(
-            description = "Sales channel",
+            description = "Sales channel (enum)",
             example = "PHARMACY"
     )
     @Enumerated(EnumType.STRING)
-    @Column(length = 32, nullable = false)
+    @Column(name = "channel", length = 32, nullable = false)
     private SalesChannel channel;
 
     @Schema(
-            description = "Sales amount in input currency",
-            example = "9999.99"
+            description = "Net sales amount in input currency",
+            example = "4321.00",
+            minimum = "0.00",
+            format = "decimal"
     )
     @Column(name = "amount_input_ccy", precision = 18, scale = 2, nullable = false)
     private BigDecimal amountInputCcy;
 
     @Schema(
-            description = "Sales amount converted to EUR (calculated)",
-            example = "2321.12",
-            accessMode = Schema.AccessMode.READ_ONLY
+            description = "Net sales amount converted to EUR (calculated)",
+            example = "987.65",
+            accessMode = Schema.AccessMode.READ_ONLY,
+            format = "decimal"
     )
     @Column(name = "amount_eur", precision = 18, scale = 2)
     private BigDecimal amountEur;
 }
-

@@ -19,41 +19,41 @@ public class QuarterReportCreatedResponse {
             description = "Unique identifier of the created report",
             example = "550e8400-e29b-41d4-a716-446655440000"
     )
-    UUID id;
+    private UUID id;
 
     @Schema(
             description = "Year of the report",
             example = "2025"
     )
-    Integer year;
+    private Integer year;
 
     @Schema(
             description = "Quarter number (1-4)",
             example = "2"
     )
-    Integer quarter;
+    private Integer quarter;
 
     @Schema(
             description = "Input currency (ISO 4217)",
             example = "PLN"
     )
-    String inputCurrency;
+    private String inputCurrency;
 
     @Schema(
             description = "Number of newly acquired clients in this quarter",
             example = "7"
     )
-    Integer newClients;
+    private Integer newClients;
 
     @Schema(
             description = "Sum of all channel amounts in input currency",
             example = "45678.90"
     )
-    BigDecimal totalInputCcy;
+    private BigDecimal totalInputCcy;
 
     @Schema(
             description = "Sum of all channel amounts converted to EUR",
             example = "10567.34"
     )
-    BigDecimal totalEur;
+    private BigDecimal totalEur;
 }

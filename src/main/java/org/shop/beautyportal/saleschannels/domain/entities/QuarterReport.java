@@ -20,8 +20,7 @@ import java.util.UUID;
 @Table(name = "quarter_report")
 @Builder
 @Getter @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 public class QuarterReport {
 
     @Schema(
@@ -45,14 +44,15 @@ public class QuarterReport {
     @Schema(
             description = "Calendar year of the report",
             example = "2025",
-            minimum = "2000"
+            minimum = "2000",
+            maximum = "2100"
     )
-    @Column(nullable = false)
+    @Column(name = "year_no", nullable = false)
     private Integer year;
 
     @Schema(
-            description = "Quarter number in range 1..4",
-            example = "2",
+            description = "Quarter number (1..4)",
+            example = "3",
             minimum = "1",
             maximum = "4"
     )
@@ -63,20 +63,22 @@ public class QuarterReport {
             description = "Input currency (ISO 4217)",
             example = "PLN",
             maxLength = 3
+            // można dodać pattern = "^[A-Z]{3}$" jeśli chcesz wymuszać format
     )
     @Column(name = "input_currency", length = 3)
     private String inputCurrency;
 
     @Schema(
             description = "Number of newly acquired clients in this quarter",
-            example = "7"
+            example = "5",
+            minimum = "0"
     )
     @Column(name = "new_clients")
     private Integer newClients;
 
     @Schema(
             description = "Sum of all channel amounts in input currency (materialized)",
-            example = "45678.90",
+            example = "15432.78",
             accessMode = Schema.AccessMode.READ_ONLY
     )
     @Column(name = "total_input_ccy", precision = 18, scale = 2)
@@ -84,33 +86,32 @@ public class QuarterReport {
 
     @Schema(
             description = "Sum of all channel amounts converted to EUR (materialized)",
-            example = "10567.34",
+            example = "3510.44",
             accessMode = Schema.AccessMode.READ_ONLY
     )
     @Column(name = "total_eur", precision = 18, scale = 2)
     private BigDecimal totalEur;
 
     @Schema(
-            description = "Creation timestamp",
+            description = "Creation timestamp (UTC)",
             example = "2025-09-15T14:30:00Z",
             accessMode = Schema.AccessMode.READ_ONLY
     )
-    @Builder.Default
     @Column(name = "created_at")
     private OffsetDateTime createdAt = OffsetDateTime.now();
 
     @Schema(
-            description = "Last update timestamp",
+            description = "Last update timestamp (UTC)",
             example = "2025-09-15T15:45:00Z",
             accessMode = Schema.AccessMode.READ_ONLY
     )
-    @Builder.Default
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt = OffsetDateTime.now();
 
     @Schema(
             description = "Optimistic lock version",
-            accessMode = Schema.AccessMode.READ_ONLY
+            accessMode = Schema.AccessMode.READ_ONLY,
+            example = "1"
     )
     @Version
     private Integer version;
@@ -123,4 +124,3 @@ public class QuarterReport {
     @Builder.Default
     private Set<QuarterChannelAmount> lines = new HashSet<>();
 }
-
