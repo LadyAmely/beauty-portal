@@ -1,7 +1,0 @@
-@import "../../../styles/_variables";
-
-.toolbar{
-  display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;
-  &__spacer{flex:1 1 auto}
-  &--separated{padding:.5rem;border:1px solid $neutral-200;border-radius:.6rem;background:#fff}
-}
