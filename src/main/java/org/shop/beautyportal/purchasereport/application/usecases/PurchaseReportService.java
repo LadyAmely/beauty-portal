@@ -100,15 +100,15 @@ public class PurchaseReportService {
         );
     }
 
-    /** Returns the total net sales for the distributor in the given year/quarter (from quarter start inclusive to next quarter start exclusive). */
-    private BigDecimal actualSales(UUID distributorId, int year, int quarter){
+    /** Returns the total net sales for the distributor in the given year/quarter [from,to). */
+    private BigDecimal actualSales(UUID distributorId, int year, int quarter) {
         LocalDate from = LocalDate.of(year, 1 + 3 * (quarter - 1), 1);
-        LocalDate to = from.plusMonths(3);
+        LocalDate to   = from.plusMonths(3);
         return salesTransactionRepository.sumNetAmount(distributorId, from, to);
     }
 
-    /** Returns the distributor's total net sales for the same quarter in the previous year (from quarter start inclusive to next quarter start exclusive). */
-    private BigDecimal lastSales(UUID distributorId, int year, int quarter){
+    /** Returns total net sales for the same quarter in the previous year [from,to). */
+    private BigDecimal lastSales(UUID distributorId, int year, int quarter) {
         LocalDate from = LocalDate.of(year - 1, 1 + 3 * (quarter - 1), 1);
         LocalDate to   = from.plusMonths(3);
         return salesTransactionRepository.sumNetAmount(distributorId, from, to);
@@ -124,7 +124,10 @@ public class PurchaseReportService {
 
     /** Budget for the current quarter from purchase_reports. */
     private BigDecimal budget(UUID distributorId, int year, int quarter) {
-        return purchaseReportRepository.findBudget(distributorId, year, quarter);
+        return purchaseReportRepository
+                .findByDistributorIdAndYearAndQuarter(distributorId, year, quarter)
+                .map(PurchaseReport::getBudget)
+                .orElse(BigDecimal.ZERO);
     }
 
     /** YoY percent for the given distributor/year/quarter (Actual vs Last Year). */
