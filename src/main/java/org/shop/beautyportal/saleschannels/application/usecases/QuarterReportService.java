@@ -84,7 +84,6 @@ public class QuarterReportService {
         Distributor distributor = getDistributor(req.getDistributorId());
         deleteExistingMonthlySales(distributor.getId(), req.getYear(), req.getMonth());
 
-        // One month/year per request => cache by currency only
         Map<String, BigDecimal> rateCache = new HashMap<>();
 
         List<MonthlySkuSales> entities = req.getLines().stream()
