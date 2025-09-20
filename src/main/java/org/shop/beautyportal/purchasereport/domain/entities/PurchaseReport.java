@@ -54,7 +54,7 @@ public class PurchaseReport {
             example = "2"
     )
     @Column(name = "quarter")
-    private Short quarter;
+    private Integer quarter;
 
     @Schema(
             description = "Sales value from the last year",
