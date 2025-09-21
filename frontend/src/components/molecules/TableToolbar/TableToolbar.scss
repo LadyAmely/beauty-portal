@@ -1,0 +1,62 @@
+@import "../../../_variables.scss";
+@import "../../../_font.scss";
+
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem 0.5rem;
+  background-color: $gray-50;
+  border-bottom: 1px solid $gray-200;
+  font-family: var(--font-family-base), serif;
+  gap: 1rem;
+
+  &__left,
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $gray-800;
+  }
+
+  &__filter {
+    font-size: 0.85rem;
+    color: $gray-700;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__select {
+    max-width: 200px;
+  }
+
+  &__button {
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    background-color: $accent-orange-600;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: $accent-orange-700;
+    }
+
+    &:disabled {
+      background-color: $gray-150;
+      color: $gray-500;
+      cursor: not-allowed;
+    }
+  }
+}
