@@ -2,9 +2,11 @@ import React from "react";
 import MediaLibraryFormPropTypes from "./MediaLibraryForm.propTypes";
 import InputGroup from "../../molecules/InputGroup/InputGroup";
 import SelectGroup from "../../molecules/SelectGroup/SelectGroup";
-import Card from "../../atoms/Card/Card";
 import Button from "../../atoms/Button/Button";
+import TopBar from "../../atoms/TopBar/TopBar";
+import Footer from "../../atoms/Footer/Footer";
 import "./MediaLibraryForm.scss";
+import MediaFileGrid from "../../molecules/Media/MediaFileGrid/MediaFileGrid";
 
 const MediaLibraryForm = ({
                               title,
@@ -20,8 +22,7 @@ const MediaLibraryForm = ({
     return (
         <div className="media-library-form">
             <h2>{title}</h2>
-
-            <div className="media-library-form__topbar">
+            <TopBar className="media-library-form__topbar">
                 <InputGroup
                     label="Search by SKU"
                     name="skuSearch"
@@ -29,7 +30,6 @@ const MediaLibraryForm = ({
                     onChange={onSearchChange}
                     placeholder="e.g. SKU123"
                 />
-
                 <SelectGroup
                     label="Sort by"
                     name="sort"
@@ -37,34 +37,11 @@ const MediaLibraryForm = ({
                     value={sortValue}
                     onChange={onSortChange}
                 />
-
                 <Button label="Download selected" onClick={onDownloadSelected} />
-            </div>
-
-            <div className="media-library-form__grid">
-                {fileList && fileList.length > 0 ? (
-                    fileList.map((file, idx) => (
-                        <Card key={idx} className="media-library-form__card">
-                            <div className="media-library-form__card-name">{file.name}</div>
-                            <div className="media-library-form__card-meta">
-                                {file.type} • {file.size} • {file.date}
-                            </div>
-                            <div className="media-library-form__card-actions">
-                                <Button
-                                    label="Download"
-                                    onClick={() => file.onDownload(file.name)}
-                                />
-                                {file.checkbox}
-                            </div>
-                        </Card>
-                    ))
-                ) : (
-                    <p>No files to display</p>
-                )}
-            </div>
-
+            </TopBar>
+            <MediaFileGrid fileList={fileList} />
             {footerNote && (
-                <div className="media-library-form__footer">{footerNote}</div>
+                <Footer className="media-library-form__footer">{footerNote}</Footer>
             )}
         </div>
     );
