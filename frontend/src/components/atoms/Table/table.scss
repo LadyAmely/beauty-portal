@@ -1,0 +1,79 @@
+// table.scss
+@import "../../../_variables.scss";
+@import "../../../_font.scss";
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  font-family: var(--font-family-base), serif;
+  color: $gray-900;
+  background-color: $gray-50;
+
+  th,
+  td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid $gray-200;
+  }
+
+  th {
+    background-color: $gray-100;
+    font-weight: 600;
+    color: $gray-700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+  }
+
+  tr:hover {
+    background-color: $gray-100;
+    transition: background-color 0.2s ease;
+  }
+
+  tr.selected {
+    background-color: $accent-red-100;
+  }
+
+  td.status-success {
+    color: $success;
+    font-weight: 600;
+  }
+
+  td.status-error {
+    color: $accent-red-600;
+    font-weight: 600;
+  }
+
+  td.status-warning {
+    color: $warning;
+    font-weight: 600;
+  }
+
+  td.status-info {
+    color: $info;
+    font-weight: 600;
+  }
+
+  &--compact th,
+  &--compact td {
+    padding: 0.5rem 0.75rem;
+  }
+
+  &--bordered th,
+  &--bordered td {
+    border: 1px solid $gray-200;
+  }
+
+  &--striped tr:nth-child(even) {
+    background-color: $gray-50;
+  }
+
+  &__footer {
+    font-size: 0.85rem;
+    color: $gray-500;
+    padding: 1rem;
+    text-align: right;
+  }
+}
