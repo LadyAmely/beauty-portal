@@ -2,7 +2,7 @@ import React from 'react';
 import tablePropTypes from './Table.propTypes';
 import './table.scss';
 
-const Table = ({ headers, rows }) => {
+const Table = ({ headers = [], rows = [] }) => {
     return (
         <table className="table">
             <thead>
