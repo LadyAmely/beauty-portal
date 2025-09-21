@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import SalesChannelsPage from "./components/pages/SalesChannels/SalesChannelsPage";
+import MediaLibraryPage from "./components/pages/MediaLibrary/MediaLibraryPage";
+import PurchaseReportPage from "./components/pages/PurchaseReport/PurchaseReportPage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Routes>
+            <Route path="/" element={<Navigate to="/sales-channels" replace />} />
+            <Route path="/sales-channels" element={<SalesChannelsPage />} />
+            <Route path="/media-library" element={<MediaLibraryPage />} />
+            <Route path="/purchase-report" element={<PurchaseReportPage />} />
+        </Routes>
+    );
 }
 
 export default App;
