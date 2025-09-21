@@ -8,12 +8,12 @@ import "./SalesChannelsForm.scss";
 
 const SalesChannelsForm = ({
                                title,
-                               periodOptions,
+                               periodOptions = [],
                                selectedPeriod,
                                onPeriodChange,
                                onImport,
-                               salesData,
-                               summaryData,
+                               salesData = {},
+                               summaryData = {},
                                onCurrencyConvert,
                            }) => {
     const channels = [
@@ -46,15 +46,22 @@ const SalesChannelsForm = ({
             </section>
 
             <section className="sales-channels-form__table">
-                {channels.map((label, idx) => (
-                    <DataRow key={idx} label={label} value={salesData[label.replace(/\s+/g, "").toLowerCase()]} />
-                ))}
-                <DataRow label="Total Sales" value={salesData.total} status="highlight" />
+                {channels.map((label, idx) => {
+                    const key = label.replace(/\s+/g, "").toLowerCase();
+                    return (
+                        <DataRow key={idx} label={label} value={salesData[key] || "—"} />
+                    );
+                })}
+                <DataRow label="Total Sales" value={salesData.total || "—"} status="highlight" />
             </section>
 
             <section className="sales-channels-form__summary">
                 {Object.entries(summaryData).map(([label, value], idx) => (
-                    <DataRow key={idx} label={label.replace(/([A-Z])/g, " $1")} value={value} />
+                    <DataRow
+                        key={idx}
+                        label={label.replace(/([A-Z])/g, " $1")}
+                        value={value || "—"}
+                    />
                 ))}
                 <Button label="Convert to EUR" onClick={onCurrencyConvert} />
             </section>

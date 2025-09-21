@@ -3,7 +3,7 @@ import selectPropTypes from './Select.propTypes';
 import './select.scss';
 
 const Select = ({
-                    options,
+                    options = [],
                     value,
                     onChange,
                     disabled,
