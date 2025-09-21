@@ -21,6 +21,9 @@ public class SkuProduct {
     @JdbcTypeCode(SqlTypes.UUID)
     private UUID id;
 
+    @Schema(name="sku")
+    private String sku;
+
     @Schema(description = "Creation timestamp (UTC)", example = "2025-09-01T08:00:00Z", accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
