@@ -1,6 +1,6 @@
 import React from "react";
 import HeaderPropTypes from "./Header.propTypes";
-import "./Header.scss";
+import "./header.scss";
 
 const Header = ({ title, actions, className = "" }) => {
     return (

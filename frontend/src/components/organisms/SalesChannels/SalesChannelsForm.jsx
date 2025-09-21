@@ -1,10 +1,12 @@
 import React from "react";
 import SalesChannelsFormPropTypes from "./SalesChannels.propTypes";
-import SelectGroup from "../../molecules/SelectGroup/SelectGroup";
+import Header from "../../atoms/Header/Header";
+import Footer from "../../atoms/Footer/Footer";
 import TableToolbar from "../../molecules/TableToolbar/TableToolbar";
-import DataRow from "../../molecules/DataRow/DataRow";
-import Button from "../../atoms/Button/Button";
 import "./SalesChannelsForm.scss";
+import Summary from "../../molecules/SalesChannels/Summary/Summary";
+import ChannelTable from "../../molecules/SalesChannels/ChannelTable/ChannelTable";
+import HeaderActions from "../../molecules/SalesChannels/HeaderActions/HeaderActions";
 
 const SalesChannelsForm = ({
                                title,
@@ -27,52 +29,29 @@ const SalesChannelsForm = ({
 
     return (
         <div className="sales-channels-form">
-            <header className="sales-channels-form__header">
-                <h2 className="sales-channels-form__header-title">{title}</h2>
-                <div className="sales-channels-form__header-actions">
-                    <SelectGroup
-                        label="Period"
-                        name="period"
-                        options={periodOptions}
-                        value={selectedPeriod}
-                        onChange={onPeriodChange}
+            <Header
+                title={title}
+                actions={
+                    <HeaderActions
+                        periodOptions={periodOptions}
+                        selectedPeriod={selectedPeriod}
+                        onPeriodChange={onPeriodChange}
+                        onImport={onImport}
                     />
-                    <Button label="Import data" onClick={onImport} />
-                </div>
-            </header>
-
+                }
+                className="sales-channels-form__header"
+            />
             <section className="sales-channels-form__toolbar">
                 <TableToolbar title="Sales by Channel" />
             </section>
-
-            <section className="sales-channels-form__table">
-                {channels.map((label, idx) => {
-                    const key = label.replace(/\s+/g, "").toLowerCase();
-                    return (
-                        <DataRow key={idx} label={label} value={salesData[key] || "—"} />
-                    );
-                })}
-                <DataRow label="Total Sales" value={salesData.total || "—"} status="highlight" />
-            </section>
-
-            <section className="sales-channels-form__summary">
-                {Object.entries(summaryData).map(([label, value], idx) => (
-                    <DataRow
-                        key={idx}
-                        label={label.replace(/([A-Z])/g, " $1")}
-                        value={value || "—"}
-                    />
-                ))}
-                <Button label="Convert to EUR" onClick={onCurrencyConvert} />
-            </section>
-
-            <footer className="sales-channels-form__footer">
+            <ChannelTable channels={channels} salesData={salesData} />
+            <Summary summaryData={summaryData} onCurrencyConvert={onCurrencyConvert} />
+            <Footer className="sales-channels-form__footer">
                 Last updated: {new Date().toLocaleDateString()}
-            </footer>
+            </Footer>
         </div>
     );
 };
 
 SalesChannelsForm.propTypes = SalesChannelsFormPropTypes;
-
 export default SalesChannelsForm;
