@@ -1,0 +1,53 @@
+// input.scss
+@import "../../../_variables.scss";
+@import "../../../_font.scss";
+
+.input {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  padding: 0.65rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: var(--font-family-base), serif;
+  line-height: 1.5;
+  color: $gray-900;
+  background-color: $gray-50;
+  border: 1px solid $gray-300;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+  &::placeholder {
+    color: $gray-500;
+    font-weight: 400;
+  }
+
+  &:hover {
+    border-color: $accent-orange-400;
+    background-color: $gray-100;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $accent-orange-600;
+    box-shadow: 0 0 0 3px rgba($accent-orange-300, 0.4);
+    background-color: #fff;
+  }
+
+  &:disabled {
+    background-color: $gray-150;
+    color: $gray-500;
+    cursor: not-allowed;
+    border-color: $gray-200;
+  }
+
+  &.input--error {
+    border-color: $error;
+    box-shadow: 0 0 0 3px rgba($error, 0.3);
+  }
+
+  &.input--success {
+    border-color: $success;
+    box-shadow: 0 0 0 3px rgba($success, 0.3);
+  }
+}

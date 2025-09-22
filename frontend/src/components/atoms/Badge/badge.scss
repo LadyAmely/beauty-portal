@@ -1,0 +1,67 @@
+// badge.scss
+@import "../../../_variables.scss";
+@import "../../../_font.scss";
+
+.badge {
+  display: inline-block;
+  padding: 0.35em 0.75em;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 1;
+  font-family: var(--font-family-base), serif;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &--small {
+    font-size: 0.7rem;
+    padding: 0.25em 0.6em;
+  }
+
+  &--medium {
+    font-size: 0.85rem;
+    padding: 0.35em 0.75em;
+  }
+
+  &--large {
+    font-size: 1rem;
+    padding: 0.45em 1em;
+  }
+
+  &--default {
+    background-color: $gray-500;
+    color: #fff;
+  }
+
+  &--success {
+    background-color: $success;
+    color: #fff;
+  }
+
+  &--warning {
+    background-color: $warning;
+    color: $gray-900;
+  }
+
+  &--error {
+    background-color: $error;
+    color: #fff;
+  }
+
+  &--info {
+    background-color: $info;
+    color: #fff;
+  }
+
+  &--accent {
+    background: linear-gradient(135deg, $accent-orange-500, $accent-red-700);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba($accent-orange-600, 0.3);
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}

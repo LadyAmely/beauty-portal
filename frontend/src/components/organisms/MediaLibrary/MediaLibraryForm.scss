@@ -1,0 +1,76 @@
+@import "../../../_variables.scss";
+@import "../../../_font.scss";
+
+.media-library-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: $gray-50;
+  font-family: var(--font-family-base), serif;
+
+  &__topbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+
+    .input-group,
+    .select-group {
+      min-width: 240px;
+      flex: 1;
+    }
+
+    .button {
+      flex-shrink: 0;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  &__card {
+    padding: 1rem;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba($gray-600, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba($gray-600, 0.12);
+    }
+
+    &-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: $gray-900;
+    }
+
+    &-meta {
+      font-size: 0.8rem;
+      color: $gray-500;
+    }
+
+    &-actions {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__footer {
+    text-align: right;
+    font-size: 0.85rem;
+    color: $gray-600;
+    padding-top: 1rem;
+    border-top: 1px solid $gray-200;
+  }
+}

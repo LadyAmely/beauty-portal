@@ -1,0 +1,21 @@
+@import "../../../_variables.scss";
+@import "../../../_font.scss";
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  font-family: var(--font-family-base), serif;
+
+  .input-group,
+  .select-group {
+    min-width: 240px;
+    flex: 1;
+  }
+
+  .button {
+    flex-shrink: 0;
+  }
+}

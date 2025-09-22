@@ -1,0 +1,11 @@
+@import "../../../_variables.scss";
+@import "../../../_font.scss";
+
+.footer {
+  text-align: right;
+  font-size: 0.85rem;
+  color: $gray-600;
+  padding-top: 1rem;
+  border-top: 1px solid $gray-200;
+  font-family: var(--font-family-base), serif;
+}
