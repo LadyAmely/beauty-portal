@@ -1,6 +1,6 @@
 import React from "react";
-import MediaLibraryForm from "../../organisms/MediaLibrary/MediaLibraryForm";
-import {useMediaLibraryController} from "../../../hooks/media/useMediaLibrary";
+import {useMediaLibraryController} from "../../hooks/media/useMediaLibrary";
+import MediaLibraryForm from "../../components/organisms/MediaLibrary/MediaLibraryForm";
 
 
 const MediaLibraryTemplate = () => {

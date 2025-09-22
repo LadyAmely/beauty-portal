@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import SalesChannelsPage from "./components/pages/SalesChannels/SalesChannelsPage";
-import MediaLibraryPage from "./components/pages/MediaLibrary/MediaLibraryPage";
-import PurchaseReportPage from "./components/pages/PurchaseReport/PurchaseReportPage";
+import SalesChannelsPage from "./pages/SalesChannels/SalesChannelsPage";
+import MediaLibraryPage from "./pages/MediaLibrary/MediaLibraryPage";
+import PurchaseReportPage from "./pages/PurchaseReport/PurchaseReportPage";
 
 function App() {
     return (

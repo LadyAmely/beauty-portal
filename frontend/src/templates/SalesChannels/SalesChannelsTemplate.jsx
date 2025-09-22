@@ -1,6 +1,6 @@
 import React from "react";
-import SalesChannelsForm from "../../organisms/SalesChannels/SalesChannelsForm";
-import {useSalesChannelsController} from "../../../hooks/salesChannel/useSalesChannelReport";
+import {useSalesChannelsController} from "../../hooks/salesChannel/useSalesChannelReport";
+import SalesChannelsForm from "../../components/organisms/SalesChannels/SalesChannelsForm";
 
 const SalesChannelsTemplate = () => {
     const distributorId = "b3f2a2c1-1234-4e56-9876-abcdef123456";

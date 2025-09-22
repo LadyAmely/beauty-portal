@@ -1,6 +1,6 @@
 import React from "react";
-import PurchaseReportForm from "../../organisms/PurchaseReport/PurchaseReportForm";
-import {usePurchaseReportController} from "../../../hooks/purchaseReport/usePurchaseReport";
+import {usePurchaseReportController} from "../../hooks/purchaseReport/usePurchaseReport";
+import PurchaseReportForm from "../../components/organisms/PurchaseReport/PurchaseReportForm";
 
 const PurchaseReportTemplate = () => {
     const {
