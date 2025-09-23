@@ -2,7 +2,6 @@ import React from "react";
 import MediaLibraryFormPropTypes from "./MediaLibraryForm.propTypes";
 import InputGroup from "../../molecules/InputGroup/InputGroup";
 import SelectGroup from "../../molecules/SelectGroup/SelectGroup";
-import Button from "../../atoms/Button/Button";
 import TopBar from "../../atoms/TopBar/TopBar";
 import Footer from "../../atoms/Footer/Footer";
 import "./MediaLibraryForm.scss";
@@ -16,7 +15,6 @@ const MediaLibraryForm = ({
                               onSortChange,
                               sortOptions,
                               fileList,
-                              onDownloadSelected,
                               footerNote,
                           }) => {
     return (
@@ -37,7 +35,6 @@ const MediaLibraryForm = ({
                     value={sortValue}
                     onChange={onSortChange}
                 />
-                <Button label="Download selected" onClick={onDownloadSelected} />
             </TopBar>
             <MediaFileGrid fileList={fileList} />
             {footerNote && (

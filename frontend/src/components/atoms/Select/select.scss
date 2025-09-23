@@ -2,8 +2,7 @@
 @import "../../../_font.scss";
 
 .select {
-  display: inline-block;
-  position: relative;
+  display: block;
   width: 100%;
   max-width: 320px;
   font-family: var(--font-family-base), serif;
@@ -11,16 +10,16 @@
   select {
     appearance: none;
     width: 100%;
-    padding: 1rem 1rem;
+    padding: 0.65rem 1rem;
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.5;
     color: $gray-900;
     background-color: $gray-50;
-    border: none;
+    border: 1px solid $gray-300;
     border-radius: 8px;
-    cursor: pointer;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    cursor: pointer;
 
     &::placeholder {
       color: $gray-500;

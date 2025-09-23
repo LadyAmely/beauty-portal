@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DataRow from "../../DataRow/DataRow";
+import "./ChannelTable.scss";
 
 const SalesChannelsTable = ({ channels, initialSalesData = {} }) => {
     const [salesData, setSalesData] = useState(initialSalesData);
@@ -15,7 +16,7 @@ const SalesChannelsTable = ({ channels, initialSalesData = {} }) => {
     };
 
     return (
-        <section className="sales-channels-form__table">
+        <section className="sales-sku-row">
             {channels.map((label, idx) => {
                 const key = label.replace(/\s+/g, "").toLowerCase();
                 const channelData = salesData[key] ?? {};
