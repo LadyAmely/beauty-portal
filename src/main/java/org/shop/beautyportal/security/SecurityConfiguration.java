@@ -1,4 +1,4 @@
-package org.shop.beautyportal.config;
+package org.shop.beautyportal.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,10 +24,14 @@ public class SecurityConfiguration {
         http.csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/").permitAll()
-                        .anyRequest()
-                        .authenticated())
+                        .requestMatchers("/api/v1/sales-channels/**").hasRole("DISTRIBUTOR")
+                        .requestMatchers("/api/v1/purchase-report/**").hasRole("EXPORT_MANAGER")
+                        .requestMatchers("/api/v1/media/**").hasAnyRole("DISTRIBUTOR", "EXPORT_MANAGER", "ADMIN", "SUPER_ADMIN")
+                        .anyRequest().hasAnyRole("ADMIN", "SUPER_ADMIN")
+                )
                 .oauth2Login(Customizer.withDefaults())
                 .logout(logout -> logout.logoutSuccessHandler(cognitoLogoutHandler));
+
         return http.build();
     }
 }

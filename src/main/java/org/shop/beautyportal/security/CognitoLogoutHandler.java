@@ -1,4 +1,4 @@
-package org.shop.beautyportal.config;
+package org.shop.beautyportal.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
