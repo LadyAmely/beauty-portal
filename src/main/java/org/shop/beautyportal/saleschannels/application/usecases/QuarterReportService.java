@@ -4,14 +4,14 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.shop.beautyportal.saleschannels.domain.entities.*;
 import org.shop.beautyportal.saleschannels.domain.repositories.*;
+import org.shop.beautyportal.saleschannels.ports.input.dto.request.CreateDistributorRequest;
 import org.shop.beautyportal.saleschannels.ports.input.dto.request.CreateQuarterReportRequest;
 import org.shop.beautyportal.saleschannels.ports.input.dto.request.InventorySnapshotRequest;
 import org.shop.beautyportal.saleschannels.ports.input.dto.request.MonthlySkuSalesRequest;
-import org.shop.beautyportal.saleschannels.ports.output.dto.response.ClientsByChannelResponse;
-import org.shop.beautyportal.saleschannels.ports.output.dto.response.InventorySnapshotResponse;
-import org.shop.beautyportal.saleschannels.ports.output.dto.response.MonthlySkuSalesResponse;
-import org.shop.beautyportal.saleschannels.ports.output.dto.response.QuarterReportCreatedResponse;
+import org.shop.beautyportal.saleschannels.ports.output.dto.response.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -53,14 +53,28 @@ public class QuarterReportService {
         assertReportNotExists(req);
 
         Distributor distributor = getDistributor(req.getDistributorId());
-        QuarterReport report = buildHeader(req, distributor);
 
+        QuarterReport report = buildHeader(req, distributor);
         addLinesFromForm(req, report);
         convertLinesToEur(report);
         fillTotals(report);
 
-        QuarterReport saved = quarterReportRepository.save(report);
-        return toResponse(saved);
+        return toResponse(quarterReportRepository.save(report));
+    }
+
+    /** Creates a new distributor if the code is unique, otherwise throws a conflict exception. */
+    @Transactional
+    public DistributorResponse createDistributor(CreateDistributorRequest req) {
+        if (distributorRepository.existsByCodeIgnoreCase(req.code())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Distributor code already exists: " + req.code());
+        }
+        Distributor d = Distributor.builder()
+                .code(req.code().trim())
+                .name(req.name().trim())
+                .build();
+        d = distributorRepository.save(d);
+        return toResponseD(d);
     }
 
     /**
@@ -135,9 +149,11 @@ public class QuarterReportService {
     }
 
     /** Loads distributor or throws if not found. */
-    private Distributor getDistributor(UUID distributorId) {
-        return distributorRepository.findById(distributorId)
-                .orElseThrow(() -> new IllegalArgumentException("Distributor not found"));
+    private Distributor getDistributor(UUID id) {
+        return distributorRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Distributor not found: " + id
+                ));
     }
 
     /** Builds report header from request and distributor; normalizes newClients (null->0). */
@@ -167,20 +183,36 @@ public class QuarterReportService {
     /** Converts each line to EUR using NBP monthly average FX and sets report.totalEur. */
     private void convertLinesToEur(QuarterReport report) {
         BigDecimal totalEur = BigDecimal.ZERO;
+
         for (QuarterChannelAmount line : report.getLines()) {
             BigDecimal rate = exchangeRateMonthlyRepository
                     .findByYearAndMonthAndCurrency(line.getYear(), line.getMonth(), report.getInputCurrency())
                     .map(ExchangeRateMonthly::getAvgToEur)
-                    .orElseThrow(() -> new IllegalStateException(
-                            "No exchange rate found for %s in %d-%d"
-                                    .formatted(report.getInputCurrency(), line.getYear(), line.getMonth())
-                    ));
+                    .orElseGet(() -> {
+                        System.out.printf("Warning: No rate for %s in %d-%d. Default rate used.%n",
+                                report.getInputCurrency(), line.getYear(), line.getMonth());
+                        return getDefaultRate(report.getInputCurrency());
+                    });
 
-            BigDecimal eur = line.getAmountInputCcy().multiply(rate).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal eur = line.getAmountInputCcy()
+                    .multiply(rate)
+                    .setScale(2, RoundingMode.HALF_UP);
+
             line.setAmountEur(eur);
             totalEur = totalEur.add(eur);
         }
         report.setTotalEur(totalEur);
+    }
+
+    /** Returns a default EUR exchange rate for the given currency or throws if unsupported. */
+    private BigDecimal getDefaultRate(String currency) {
+        return switch (currency) {
+            case "PLN" -> BigDecimal.valueOf(4.50);
+            case "USD" -> BigDecimal.valueOf(0.90);
+            case "GBP" -> BigDecimal.valueOf(1.15);
+            case "EUR" -> BigDecimal.ONE;
+            default -> throw new IllegalArgumentException("No default rate for currency: " + currency);
+        };
     }
 
     /** Fills aggregate totals on report (totalInputCcy; totalEur is set in convertLinesToEur). */
@@ -202,6 +234,10 @@ public class QuarterReportService {
                 .totalInputCcy(saved.getTotalInputCcy())
                 .totalEur(saved.getTotalEur())
                 .build();
+    }
+
+    private static DistributorResponse toResponseD(Distributor d) {
+        return new DistributorResponse(d.getId(), d.getCode(), d.getName());
     }
 
     /** Deletes existing inventory snapshots for distributor/date to replace them. */

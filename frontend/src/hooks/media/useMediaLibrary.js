@@ -1,8 +1,8 @@
+// src/hooks/media/useMediaLibrary.js
 import { useState, useEffect } from "react";
 import {
-    fetchMediaItems,
-    uploadMediaFile,
-    deleteMediaFile,
+    getAllMediaFiles,
+    uploadSingleFile,
 } from "../../api/MediaApi";
 
 export const useMediaLibraryController = () => {
@@ -17,18 +17,18 @@ export const useMediaLibraryController = () => {
         { value: "Audio", label: "Audio" },
     ];
 
-    useEffect(() => {
-        const loadMedia = async () => {
-            try {
-                const items = await fetchMediaItems();
-                setMediaItems(items);
-            } catch (err) {
-                console.error("Failed to load media", err);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const loadMedia = async () => {
+        try {
+            const items = await getAllMediaFiles();
+            setMediaItems(items);
+        } catch (err) {
+            console.error("Failed to load media", err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         loadMedia();
     }, []);
 
@@ -36,12 +36,10 @@ export const useMediaLibraryController = () => {
         const input = document.createElement("input");
         input.type = "file";
         input.onchange = async (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                await uploadMediaFile(file);
-                const updated = await fetchMediaItems();
-                setMediaItems(updated);
-            }
+            const file = e.target.files?.[0];
+            if (!file) return;
+            await uploadSingleFile(file);
+            await loadMedia();
         };
         input.click();
     };
@@ -51,13 +49,11 @@ export const useMediaLibraryController = () => {
     };
 
     const handleDelete = async (itemId) => {
-        await deleteMediaFile(itemId);
-        const updated = await fetchMediaItems();
-        setMediaItems(updated);
+        console.warn("deleteMediaFile niezaimplementowane w MediaApi");
     };
 
     const filteredItems = mediaItems.filter((item) =>
-        item.type.toLowerCase().includes(selectedCategory.toLowerCase())
+        item.type?.toLowerCase().includes(selectedCategory.toLowerCase())
     );
 
     return {

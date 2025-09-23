@@ -1,6 +1,6 @@
 import React from "react";
 import DataRow from "../../DataRow/DataRow";
-import {Button} from "../../../../stories/Button";
+import Button from "../../../atoms/Button/Button";
 
 const SalesChannelsSummary = ({ summaryData, onCurrencyConvert }) => (
     <section className="sales-channels-form__summary">

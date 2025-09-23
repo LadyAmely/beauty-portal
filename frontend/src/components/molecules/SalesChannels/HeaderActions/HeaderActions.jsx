@@ -1,6 +1,6 @@
 import React from "react";
 import SelectGroup from "../../SelectGroup/SelectGroup";
-import {Button} from "../../../../stories/Button";
+import Button from "../../../atoms/Button/Button";
 
 const HeaderActions = ({
                                         periodOptions,
