@@ -2,6 +2,8 @@ package org.shop.beautyportal.saleschannels.application.usecases;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.shop.beautyportal.mapper.saleschannel.DistributorMapper;
+import org.shop.beautyportal.mapper.saleschannel.QuarterReportMapper;
 import org.shop.beautyportal.saleschannels.domain.entities.*;
 import org.shop.beautyportal.saleschannels.domain.repositories.*;
 import org.shop.beautyportal.saleschannels.ports.input.dto.request.CreateDistributorRequest;
@@ -39,6 +41,8 @@ public class QuarterReportService {
     private final InventorySnapshotRepository snapshotRepository;
     private final MonthlySkuSalesRepository monthlySkuSalesRepository;
     private final ClientRepository clientRepository;
+    private final DistributorMapper distributorMapper;
+    private final QuarterReportMapper mapper;
 
     /**
      * Creates a quarterly report from tabular form data.
@@ -59,7 +63,7 @@ public class QuarterReportService {
         convertLinesToEur(report);
         fillTotals(report);
 
-        return toResponse(quarterReportRepository.save(report));
+        return mapper.toResponse(quarterReportRepository.save(report));
     }
 
     /** Creates a new distributor if the code is unique, otherwise throws a conflict exception. */
@@ -74,7 +78,7 @@ public class QuarterReportService {
                 .name(req.name().trim())
                 .build();
         d = distributorRepository.save(d);
-        return toResponseD(d);
+        return distributorMapper.toResponse(d);
     }
 
     /**
@@ -221,23 +225,6 @@ public class QuarterReportService {
                 .map(QuarterChannelAmount::getAmountInputCcy)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         report.setTotalInputCcy(totalInput);
-    }
-
-    /** Maps saved domain object to response DTO. */
-    private QuarterReportCreatedResponse toResponse(QuarterReport saved) {
-        return QuarterReportCreatedResponse.builder()
-                .id(saved.getId())
-                .year(saved.getYear())
-                .quarter(saved.getQuarter())
-                .inputCurrency(saved.getInputCurrency())
-                .newClients(saved.getNewClients())
-                .totalInputCcy(saved.getTotalInputCcy())
-                .totalEur(saved.getTotalEur())
-                .build();
-    }
-
-    private static DistributorResponse toResponseD(Distributor d) {
-        return new DistributorResponse(d.getId(), d.getCode(), d.getName());
     }
 
     /** Deletes existing inventory snapshots for distributor/date to replace them. */

@@ -1,10 +1,8 @@
 import React from "react";
 import SalesChannelsFormPropTypes from "./SalesChannels.propTypes";
-import Header from "../../atoms/Header/Header";
 import Footer from "../../atoms/Footer/Footer";
 import "./SalesChannelsForm.scss";
 import ReportSection from "../../molecules/Report/ReportSection"
-import HeaderActions from "../../molecules/SalesChannels/HeaderActions/HeaderActions";
 import DataRow from "../../molecules/DataRow/DataRow";
 import Button from "../../atoms/Button/Button";
 import {
