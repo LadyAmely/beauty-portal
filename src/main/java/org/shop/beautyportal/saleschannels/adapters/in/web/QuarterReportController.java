@@ -5,13 +5,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.shop.beautyportal.saleschannels.application.usecases.QuarterReportService;
+import org.shop.beautyportal.saleschannels.ports.input.dto.request.CreateDistributorRequest;
 import org.shop.beautyportal.saleschannels.ports.input.dto.request.CreateQuarterReportRequest;
 import org.shop.beautyportal.saleschannels.ports.input.dto.request.InventorySnapshotRequest;
 import org.shop.beautyportal.saleschannels.ports.input.dto.request.MonthlySkuSalesRequest;
-import org.shop.beautyportal.saleschannels.ports.output.dto.response.ClientsByChannelResponse;
-import org.shop.beautyportal.saleschannels.ports.output.dto.response.InventorySnapshotResponse;
-import org.shop.beautyportal.saleschannels.ports.output.dto.response.MonthlySkuSalesResponse;
-import org.shop.beautyportal.saleschannels.ports.output.dto.response.QuarterReportCreatedResponse;
+import org.shop.beautyportal.saleschannels.ports.output.dto.response.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +24,17 @@ import java.util.UUID;
 public class QuarterReportController {
 
     private final QuarterReportService service;
+
+    @Operation(summary = "Create a distributor")
+    @PostMapping(value = "/distributors", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<DistributorResponse> createDistributor(
+            @Valid @RequestBody CreateDistributorRequest request) {
+
+        DistributorResponse resp = service.createDistributor(request);
+        return ResponseEntity
+                .created(URI.create("/api/v1/sales-channels/distributors/" + resp.id()))
+                .body(resp);
+    }
 
     @Operation(summary = "Create quarterly report (tabular form)")
     @PostMapping(value = "/quarter-reports", consumes = "application/json", produces = "application/json")
