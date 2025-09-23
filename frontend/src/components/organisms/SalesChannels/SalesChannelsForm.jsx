@@ -25,18 +25,6 @@ const SalesChannelsForm = ({
 
     return (
         <div className="sales-channels-form">
-            <Header
-                title={title}
-                actions={
-                    <HeaderActions
-                        periodOptions={periodOptions}
-                        selectedPeriod={selectedPeriod}
-                        onPeriodChange={onPeriodChange}
-                        onImport={onImport}
-                    />
-                }
-                className="sales-channels-form__header"
-            />
             <section className="sales-channels-form__toolbar">
                 <Button variant="outline" className="sales-channel__import-button">
                     <i className="icon-upload" />
