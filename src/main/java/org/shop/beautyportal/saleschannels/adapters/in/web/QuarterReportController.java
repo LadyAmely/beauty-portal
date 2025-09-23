@@ -31,7 +31,6 @@ public class QuarterReportController {
     @PostMapping(value = "/quarter-reports", consumes = "application/json", produces = "application/json")
     public ResponseEntity<QuarterReportCreatedResponse> createQuarterReport(
             @Valid @RequestBody CreateQuarterReportRequest request) {
-
         QuarterReportCreatedResponse resp = service.createReport(request);
         return ResponseEntity
                 .created(URI.create("/api/sales-channels/quarter-reports/" + resp.getId()))

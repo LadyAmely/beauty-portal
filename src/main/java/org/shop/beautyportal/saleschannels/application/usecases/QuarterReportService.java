@@ -11,7 +11,9 @@ import org.shop.beautyportal.saleschannels.ports.output.dto.response.ClientsByCh
 import org.shop.beautyportal.saleschannels.ports.output.dto.response.InventorySnapshotResponse;
 import org.shop.beautyportal.saleschannels.ports.output.dto.response.MonthlySkuSalesResponse;
 import org.shop.beautyportal.saleschannels.ports.output.dto.response.QuarterReportCreatedResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -53,14 +55,13 @@ public class QuarterReportService {
         assertReportNotExists(req);
 
         Distributor distributor = getDistributor(req.getDistributorId());
-        QuarterReport report = buildHeader(req, distributor);
 
+        QuarterReport report = buildHeader(req, distributor);
         addLinesFromForm(req, report);
         convertLinesToEur(report);
         fillTotals(report);
 
-        QuarterReport saved = quarterReportRepository.save(report);
-        return toResponse(saved);
+        return toResponse(quarterReportRepository.save(report));
     }
 
     /**
@@ -135,9 +136,11 @@ public class QuarterReportService {
     }
 
     /** Loads distributor or throws if not found. */
-    private Distributor getDistributor(UUID distributorId) {
-        return distributorRepository.findById(distributorId)
-                .orElseThrow(() -> new IllegalArgumentException("Distributor not found"));
+    private Distributor getDistributor(UUID id) {
+        return distributorRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Distributor not found: " + id
+                ));
     }
 
     /** Builds report header from request and distributor; normalizes newClients (null->0). */

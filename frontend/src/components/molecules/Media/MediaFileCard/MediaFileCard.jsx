@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../../../atoms/Card/Card";
-import {Button} from "../../../../stories/Button";
+import Button from "../../../atoms/Button/Button";
 
 const MediaFileCard = ({ file }) => (
     <Card className="media-library-form__card">
