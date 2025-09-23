@@ -1,0 +1,56 @@
+@import "../../../_variables.scss";
+@import "../../../_font.scss";
+
+.search-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  label {
+    margin-left: 1rem;
+  }
+
+  .search-input {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    padding-left: 2.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: var(--font-family-base), serif;
+    line-height: 1.5;
+    color: $gray-900;
+    background-color: $gray-50;
+    border: 1px solid $gray-300;
+    border-radius: 8px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+    &::placeholder {
+      color: $gray-500;
+      font-weight: 400;
+    }
+
+    &:hover {
+      border-color: $accent-orange-400;
+      background-color: $gray-100;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $accent-orange-600;
+      box-shadow: 0 0 0 3px rgba($accent-orange-300, 0.4);
+      background-color: #fff;
+    }
+  }
+
+  .search-input-icon {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+  }
+}
