@@ -5,16 +5,12 @@ import Footer from "../../atoms/Footer/Footer";
 import TableToolbar from "../../molecules/TableToolbar/TableToolbar";
 import "./PurchaseReportForm.scss";
 import getReportMetrics from "../../../helpers/getReportMetrics";
-import HeaderActions from "../../molecules/PurchaseReport/HeaderActions/HeaderActions";
 import TablePlaceholder from "../../molecules/PurchaseReport/TablePlaceholder/TablePlaceholder";
 import MetricsList from "../../molecules/PurchaseReport/MetricsList/MetricsList";
+import Button from "../../atoms/Button/Button";
 
 const PurchaseReportForm = ({
                                 title,
-                                quarterOptions,
-                                selectedQuarter,
-                                onQuarterChange,
-                                onExport,
                                 purchaseData,
                                 posSummary,
                                 comparisonMetrics,
@@ -26,12 +22,10 @@ const PurchaseReportForm = ({
             <Header
                 title={title}
                 actions={
-                    <HeaderActions
-                        quarterOptions={quarterOptions}
-                        selectedQuarter={selectedQuarter}
-                        onQuarterChange={onQuarterChange}
-                        onExport={onExport}
-                    />
+                    <Button variant="outline" className="purchase-report-form__fetch-sales-button">
+                        <i className="icon-sync" />
+                        Sync Sales
+                    </Button>
                 }
                 className="purchase-report-form__header"
             />

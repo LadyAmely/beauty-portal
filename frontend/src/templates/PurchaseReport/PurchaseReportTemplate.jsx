@@ -1,7 +1,6 @@
 import React from "react";
 import {usePurchaseReportController} from "../../hooks/purchaseReport/usePurchaseReport";
 import PurchaseReportForm from "../../components/organisms/PurchaseReport/PurchaseReportForm";
-import Select from "../../components/atoms/Select/Select";
 
 const PurchaseReportTemplate = () => {
     const {

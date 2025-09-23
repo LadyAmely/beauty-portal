@@ -2,16 +2,13 @@ import React from "react";
 import SalesChannelsFormPropTypes from "./SalesChannels.propTypes";
 import Header from "../../atoms/Header/Header";
 import Footer from "../../atoms/Footer/Footer";
-import TableToolbar from "../../molecules/TableToolbar/TableToolbar";
 import "./SalesChannelsForm.scss";
 import ReportSection from "../../molecules/Report/ReportSection"
-import ChannelTable from "../../molecules/SalesChannels/ChannelTable/ChannelTable";
 import HeaderActions from "../../molecules/SalesChannels/HeaderActions/HeaderActions";
 import DataRow from "../../molecules/DataRow/DataRow";
 import Button from "../../atoms/Button/Button";
-import Table from "../../atoms/Table/Table";
 import {
-    channels, clientHeaders, clientRows,
+    clientHeaders, clientRows,
     inventoryHeaders,
     inventoryRows, monthlySalesHeaders, monthlySalesRows,
     salesByChannelHeaders,

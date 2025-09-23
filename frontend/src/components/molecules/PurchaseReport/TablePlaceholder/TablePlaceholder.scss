@@ -1,0 +1,10 @@
+@import "../../../../_variables.scss";
+
+.purchase-report-form__table-placeholder {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid $gray-200;
+}
