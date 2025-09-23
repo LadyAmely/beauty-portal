@@ -2,27 +2,34 @@
 @import "../../../_font.scss";
 
 .data-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0;
   align-items: center;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid $gray-200;
+  padding: 0.5rem 1rem;
   font-family: var(--font-family-base), serif;
 
-  &__label {
-    font-size: 0.9rem;
-    color: $gray-700;
-    font-weight: 500;
-  }
-
+  &__label,
   &__value {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.95rem;
+    font-weight: 500;
     color: $gray-900;
+    padding: 0.5rem;
+    border-left: 1px solid $gray-200;
+
+    &:first-child {
+      border-left: none;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid $gray-200;
+      background: $gray-50;
+    }
   }
 
   &--highlight {
-    background-color: $gray-50;
+    background-color: $gray-100;
   }
 
   &--error .data-row__value {

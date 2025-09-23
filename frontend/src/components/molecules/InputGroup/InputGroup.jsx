@@ -2,6 +2,7 @@ import React from "react";
 import Input from "../../atoms/Input/Input";
 import InputGroupPropTypes from "./InputGroup.propTypes";
 import "./InputGroup.scss";
+import {FaSearch} from "react-icons/fa";
 
 const InputGroup = ({
                         label,
@@ -23,7 +24,6 @@ const InputGroup = ({
     return (
         <div className={`input-group ${statusClass}`}>
             {label && <label htmlFor={name} className="input-group__label">{label}</label>}
-
             <Input
                 id={name}
                 name={name}
