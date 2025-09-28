@@ -98,6 +98,7 @@ public class QuarterReport {
             accessMode = Schema.AccessMode.READ_ONLY
     )
     @Column(name = "created_at")
+    @Builder.Default
     private OffsetDateTime createdAt = OffsetDateTime.now();
 
     @Schema(
@@ -106,6 +107,7 @@ public class QuarterReport {
             accessMode = Schema.AccessMode.READ_ONLY
     )
     @Column(name = "updated_at")
+    @Builder.Default
     private OffsetDateTime updatedAt = OffsetDateTime.now();
 
     @Schema(
