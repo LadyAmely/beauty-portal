@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import {getClientsByChannel} from "../../api/SalesChannelsApi";
+import {useState, useEffect, use} from "react";
+import {createQuarterReport, getClientsByChannel} from "../../api/SalesChannelsApi";
 
 export const useSalesChannelsController = (distributorId) => {
     const [selectedChannel, setSelectedChannel] = useState("Professional");
@@ -42,4 +42,53 @@ export const useSalesChannelsController = (distributorId) => {
         loading,
         onExport: handleExport,
     };
+};
+
+export const useSalesChannelForm =()=>{
+
+    const [order, setOrder] = useState("");
+    const [salesChannel, setSalesChannel] = useState("");
+    const [newClients, setNewClients] = useState("");
+    const [month, setMonth] = useState("");
+    const [exchangeRate, setExchangeRate] = useState("");
+    const [unitSold, setUnitSold] = useState("");
+    const [salesValueEUR, setSalesValueEUR] = useState("");
+    const [salesValuePLN, setSalesValuePLN] = useState("");
+    const [loading, setLoading]= useState(false);
+    const [error, setError] = useState(null);
+
+    const handleSubmit = async(e)=>{
+        e.preventDefault();
+        setError(null);
+        try{
+            setLoading(true);
+            await(createQuarterReport({
+                order,
+                salesChannel,
+                newClients,
+                month,
+                exchangeRate,
+                unitSold,
+                salesValueEUR,
+                salesValuePLN
+            }))
+        }catch(error){
+            setError("");
+        }finally{
+            setLoading(false);
+        }
+    };
+  return {
+      order, setOrder,
+      salesChannel, setSalesChannel,
+      newClients, setNewClients,
+      month, setMonth,
+      exchangeRate, setExchangeRate,
+      unitSold, setUnitSold,
+      salesValueEUR, setSalesValueEUR,
+      salesValuePLN, setSalesValuePLN,
+      error, setError,
+      loading, setLoading,
+      handleSubmit
+  };
 };
