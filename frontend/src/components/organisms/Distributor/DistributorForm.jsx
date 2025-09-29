@@ -4,6 +4,7 @@ import Button from "../../atoms/Button/Button";
 import Footer from "../../atoms/Footer/Footer";
 import "./DistributorForm.scss";
 import {useDistributorForm} from "../../../hooks/distributor/useDistributoForm";
+import Input from "../../atoms/Input/Input";
 
 const DistributorForm = ({ onSubmit }) => {
     const {
@@ -20,7 +21,7 @@ const DistributorForm = ({ onSubmit }) => {
             <form onSubmit={handleSubmit} className="distributor-form__fields">
                 <div className="form-group">
                     <label htmlFor="code">Distributor Code</label>
-                    <input
+                    <Input
                         type="text"
                         id="code"
                         value={code}
@@ -32,7 +33,7 @@ const DistributorForm = ({ onSubmit }) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="name">Distributor Name</label>
-                    <input
+                    <Input
                         type="text"
                         id="name"
                         value={name}
@@ -42,15 +43,13 @@ const DistributorForm = ({ onSubmit }) => {
                         placeholder="e.g. Acme Distribution Sp. z o.o."
                     />
                 </div>
-                {error && <p className="error">{error}</p>}
-                <Button type="submit" variant="primary" className="distributor-form__submit-button" disabled={loading}>
-                    <i className="icon-plus" />
-                    {loading ? "Adding..." : "Add Distributor"}
-                </Button>
             </form>
-            <Footer className="distributor-form__footer">
-                Last updated: {new Date().toLocaleDateString()}
-            </Footer>
+            {error && <p className="error">{error}</p>}
+            <Button type="submit" variant="primary" className="distributor-form__submit-button" disabled={loading}>
+                <i className="icon-plus" />
+                {loading ? "Adding..." : "Add Distributor"}
+            </Button>
+            <Footer className="distributor-form__footer"/>
         </div>
     );
 };
